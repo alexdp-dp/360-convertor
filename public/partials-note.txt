@@ -1,0 +1,1 @@
+Paginile folosesc aceeași navigație pentru a rămâne compatibile cu găzduirea statică Express.
