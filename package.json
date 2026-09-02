@@ -1,6 +1,6 @@
 {
   "name": "dosar-multiconverter",
-  "version": "8.0.0",
+  "version": "10.0.0",
   "private": true,
   "description": "Site multipagina de conversii si randomizare",
   "main": "server.js",

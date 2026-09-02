@@ -13,3 +13,5 @@ a{color:inherit}.page-shell{width:min(1260px,calc(100% - 40px));margin:28px auto
 
 /* Fundalul rămâne exclusiv gradientul definit pe body. */
 body::before{display:none}
+html{background:radial-gradient(900px 620px at 4% 32%,rgba(21,100,151,.2),transparent 72%),radial-gradient(850px 650px at 98% 20%,rgba(112,30,57,.17),transparent 72%),linear-gradient(128deg,#121923 0%,#191a21 51%,#1b151b 100%);background-attachment:fixed}
+body{display:flow-root;background:transparent}

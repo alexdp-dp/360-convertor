@@ -1,6 +1,6 @@
 # DOSAR — Multi Converter
 
-Site multipagină Node.js + Express + Bootstrap, pregătit pentru GitHub și Render. Build 8 include interfața dark premium, faviconul DOSAR și fundalul full-gradient fără stratul uniform generat de `body::before`.
+Site multipagină Node.js + Express + Bootstrap, pregătit pentru GitHub și Render. Build 10 aplică gradientul direct pe rădăcina `html`, astfel încât întreaga fereastră este acoperită fără spațiu negru deasupra paginii.
 
 ## Local
 
