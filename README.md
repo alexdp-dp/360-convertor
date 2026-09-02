@@ -1,6 +1,6 @@
 # DOSAR — Multi Converter
 
-Site multipagină Node.js + Express + Bootstrap, pregătit pentru GitHub și Render. Build 3 include 12 secțiuni, meniu mobil pe tot ecranul, scrollere vizibile și controale cu valori afișate în timp real.
+Site multipagină Node.js + Express + Bootstrap, pregătit pentru GitHub și Render. Build 4 include scrollere personalizate permanent vizibile și o pagină principală compactă, cu paleta exactă a separatoarelor.
 
 ## Local
 
