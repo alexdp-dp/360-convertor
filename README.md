@@ -1,6 +1,6 @@
 # DOSAR — Multi Converter
 
-Site multipagină Node.js + Express + Bootstrap, pregătit pentru GitHub și Render. Build 5 adaugă etichete permanente și unități explicite pentru toate câmpurile din toate instrumentele.
+Site multipagină Node.js + Express + Bootstrap, pregătit pentru GitHub și Render. Build 6 introduce un redesign complet: interfață dark premium, carduri grafit, accente funcționale și controale moderne, inspirate de mockupul furnizat.
 
 ## Local
 
