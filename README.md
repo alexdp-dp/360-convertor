@@ -1,6 +1,6 @@
 # DOSAR — Multi Converter
 
-Site multipagină Node.js + Express + Bootstrap, pregătit pentru GitHub și Render. Build 6 introduce un redesign complet: interfață dark premium, carduri grafit, accente funcționale și controale moderne, inspirate de mockupul furnizat.
+Site multipagină Node.js + Express + Bootstrap, pregătit pentru GitHub și Render. Build 8 include interfața dark premium, faviconul DOSAR și fundalul full-gradient fără stratul uniform generat de `body::before`.
 
 ## Local
 
