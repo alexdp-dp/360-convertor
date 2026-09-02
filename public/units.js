@@ -1,16 +1,20 @@
-const categories = {
-  lungime:{name:'Lungime',units:{'Milimetri|mm':.001,'Centimetri|cm':.01,'Metri|m':1,'Kilometri|km':1000,'Inch|in':.0254,'Picioare|ft':.3048,'Yarzi|yd':.9144,'Mile|mi':1609.344}},
-  suprafata:{name:'Suprafață',units:{'Centimetri pătrați|cm²':.0001,'Metri pătrați|m²':1,'Hectare|ha':10000,'Kilometri pătrați|km²':1e6,'Acri|ac':4046.8564224}},
-  masa:{name:'Masă',units:{'Miligrame|mg':.000001,'Grame|g':.001,'Kilograme|kg':1,'Tone|t':1000,'Uncii|oz':.028349523125,'Livre|lb':.45359237}},
-  volum:{name:'Volum',units:{'Mililitri|ml':.001,'Centilitri|cl':.01,'Litri|l':1,'Metri cubi|m³':1000,'Galoane SUA|gal':3.785411784}},
-  viteza:{name:'Viteză',units:{'Metri/secundă|m/s':1,'Kilometri/oră|km/h':.2777777778,'Mile/oră|mph':.44704,'Noduri|kn':.5144444444}},
-  temperatura:{name:'Temperatură',temperature:true,units:{'Celsius|°C':'c','Fahrenheit|°F':'f','Kelvin|K':'k'}},
-  timp:{name:'Timp',units:{'Milisecunde|ms':.001,'Secunde|s':1,'Minute|min':60,'Ore|h':3600,'Zile|zile':86400,'Săptămâni|săpt.':604800}},
-  date:{name:'Stocare digitală',units:{'Bytes|B':1,'Kilobytes|KB':1e3,'Megabytes|MB':1e6,'Gigabytes|GB':1e9,'Terabytes|TB':1e12}}
+const categories={
+lungime:{name:'Lungime',defaultValue:1000,units:{'Micrometri|μm':.000001,'Milimetri|mm':.001,'Centimetri|cm':.01,'Decimetri|dm':.1,'Metri|m':1,'Kilometri|km':1000,'Inch|in':.0254,'Picioare|ft':.3048,'Yarzi|yd':.9144,'Mile|mi':1609.344,'Mile marine|NM':1852}},
+suprafata:{name:'Suprafață',defaultValue:10000,units:{'Milimetri pătrați|mm²':.000001,'Centimetri pătrați|cm²':.0001,'Decimetri pătrați|dm²':.01,'Metri pătrați|m²':1,'Ari|a':100,'Hectare|ha':10000,'Kilometri pătrați|km²':1e6,'Acri|ac':4046.8564224,'Picioare pătrate|ft²':.09290304,'Mile pătrate|mi²':2589988.110336}},
+masa:{name:'Masă',defaultValue:1000,units:{'Micrograme|μg':1e-9,'Miligrame|mg':.000001,'Grame|g':.001,'Kilograme|kg':1,'Chintale|q':100,'Tone|t':1000,'Uncii|oz':.028349523125,'Livre|lb':.45359237,'Stone|st':6.35029318}},
+volum:{name:'Volum',defaultValue:1000,units:{'Milimetri cubi|mm³':.000001,'Centimetri cubi|cm³':.001,'Mililitri|ml':.001,'Centilitri|cl':.01,'Decilitri|dl':.1,'Litri|l':1,'Metri cubi|m³':1000,'Galoane SUA|gal US':3.785411784,'Galoane UK|gal UK':4.54609,'Pinte SUA|pt US':.473176473}},
+viteza:{name:'Viteză',defaultValue:100,units:{'Metri/secundă|m/s':1,'Kilometri/oră|km/h':.2777777777778,'Mile/oră|mph':.44704,'Noduri|kn':.5144444444,'Mach|Ma':343}},
+temperatura:{name:'Temperatură',defaultValue:20,temperature:true,units:{'Celsius|°C':'c','Fahrenheit|°F':'f','Kelvin|K':'k'}},
+timp:{name:'Timp',defaultValue:1000,units:{'Milisecunde|ms':.001,'Secunde|s':1,'Minute|min':60,'Ore|h':3600,'Zile|zile':86400,'Săptămâni|săpt.':604800,'Ani medii|ani':31557600}},
+date:{name:'Stocare digitală',defaultValue:1024,units:{'Bytes|B':1,'Kilobytes|KB':1024,'Megabytes|MB':1048576,'Gigabytes|GB':1073741824,'Terabytes|TB':1099511627776,'Petabytes|PB':1125899906842624}},
+presiune:{name:'Presiune',defaultValue:1000,units:{'Pascali|Pa':1,'Kilopascali|kPa':1000,'Bar|bar':100000,'Atmosfere|atm':101325,'PSI|psi':6894.757293}},
+energie:{name:'Energie',defaultValue:1000,units:{'Jouli|J':1,'Kilojouli|kJ':1000,'Calorii|cal':4.184,'Kilocalorii|kcal':4184,'Watt-oră|Wh':3600,'Kilowatt-oră|kWh':3600000}},
+putere:{name:'Putere',defaultValue:1000,units:{'Wați|W':1,'Kilowați|kW':1000,'Megawați|MW':1e6,'Cai putere metrici|CP':735.49875,'Horsepower|hp':745.699872}},
+unghi:{name:'Unghi',defaultValue:180,units:{'Grade|°':1,'Radiani|rad':180/Math.PI,'Gradiani|gon':.9,'Rotații|rot':360}}
 };
-const select=document.querySelector('#category'),list=document.querySelector('#unitList');
-Object.entries(categories).forEach(([k,v])=>select.add(new Option(v.name,k)));
-function tempToC(v,u){return u==='c'?v:u==='f'?(v-32)*5/9:v-273.15} function cToTemp(v,u){return u==='c'?v:u==='f'?v*9/5+32:v+273.15}
-function render(){const cat=categories[select.value];list.innerHTML='';Object.entries(cat.units).forEach(([label,factor])=>{const [name,symbol]=label.split('|');const row=document.createElement('label');row.className='unit-row';row.innerHTML=`<strong>${symbol}<small class="d-block text-secondary">${name}</small></strong><input class="form-control" inputmode="decimal" data-factor="${factor}" aria-label="${name}">`;list.append(row)});list.querySelectorAll('input').forEach(input=>input.addEventListener('input',()=>convert(input,cat)));list.querySelector('input').value=1;convert(list.querySelector('input'),cat)}
-function convert(source,cat){const raw=source.value.replace(',','.').replace(/\s/g,'');if(raw===''||!Number.isFinite(Number(raw))){list.querySelectorAll('input').forEach(i=>{if(i!==source)i.value=''});return}const value=Number(raw);const base=cat.temperature?tempToC(value,source.dataset.factor):value*Number(source.dataset.factor);list.querySelectorAll('input').forEach(i=>{if(i!==source){const result=cat.temperature?cToTemp(base,i.dataset.factor):base/Number(i.dataset.factor);i.value=Number(result.toPrecision(12)).toString()}})}
+const select=document.querySelector('#category'),list=document.querySelector('#unitList');Object.entries(categories).forEach(([k,v])=>select.add(new Option(v.name,k)));
+function tempToC(v,u){return u==='c'?v:u==='f'?(v-32)*5/9:v-273.15}function cToTemp(v,u){return u==='c'?v:u==='f'?v*9/5+32:v+273.15}
+function displayValue(n){if(!Number.isFinite(n))return'';if(n===0)return'0';const a=Math.abs(n),d=a>=1000?6:a>=1?10:Math.min(16,Math.max(8,Math.ceil(-Math.log10(a))+6));return n.toLocaleString('en-US',{useGrouping:false,maximumFractionDigits:d})}
+function render(){const cat=categories[select.value];list.innerHTML='';Object.entries(cat.units).forEach(([label,factor])=>{const[name,symbol]=label.split('|');const row=document.createElement('label');row.className='unit-row';row.innerHTML=`<strong>${symbol}<small class="d-block text-secondary">${name}</small></strong><input class="form-control" inputmode="decimal" data-factor="${factor}" aria-label="${name}">`;list.append(row)});list.querySelectorAll('input').forEach(i=>i.addEventListener('input',()=>convert(i,cat)));list.querySelector('input').value=cat.defaultValue;convert(list.querySelector('input'),cat)}
+function convert(source,cat){const raw=source.value.replace(',','.').replace(/\s/g,'');if(raw===''||!Number.isFinite(Number(raw))){list.querySelectorAll('input').forEach(i=>{if(i!==source)i.value=''});return}const value=Number(raw),base=cat.temperature?tempToC(value,source.dataset.factor):value*Number(source.dataset.factor);list.querySelectorAll('input').forEach(i=>{if(i!==source){const r=cat.temperature?cToTemp(base,i.dataset.factor):base/Number(i.dataset.factor);i.value=displayValue(r)}})}
 select.addEventListener('change',render);render();

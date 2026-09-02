@@ -1,6 +1,6 @@
 # DOSAR — Multi Converter
 
-Site multipagină Node.js + Express + Bootstrap, pregătit pentru GitHub și Render.
+Site multipagină Node.js + Express + Bootstrap, pregătit pentru GitHub și Render. Build 2 include 12 secțiuni: unități, randomizare, zaruri, valutar BNR, calculatoare, dată și timp, liste, text, culori, generatoare și dimensiuni.
 
 ## Local
 
@@ -18,4 +18,4 @@ Deschide `http://localhost:3000`.
 - Start command: `npm start`
 - Root directory: gol
 
-Cursul valutar este preluat de server din fluxul XML BNR și păstrat temporar în cache.
+Cursul valutar este preluat exclusiv din fluxul XML oficial `https://curs.bnr.ro/nbrfxrates.xml` și păstrat temporar în cache.

@@ -13,7 +13,14 @@ const pages = {
   '/unitati-de-masura': 'unitati-de-masura.html',
   '/randomizare': 'randomizare.html',
   '/zaruri': 'zaruri.html',
-  '/convertor-valutar': 'convertor-valutar.html'
+  '/convertor-valutar': 'convertor-valutar.html',
+  '/calculatoare': 'calculatoare.html',
+  '/data-si-timp': 'data-si-timp.html',
+  '/liste': 'liste.html',
+  '/text': 'text.html',
+  '/culori': 'culori.html',
+  '/generatoare': 'generatoare.html',
+  '/dimensiuni': 'dimensiuni.html'
 };
 
 Object.entries(pages).forEach(([route, file]) => {
@@ -22,11 +29,6 @@ Object.entries(pages).forEach(([route, file]) => {
 
 let rateCache = null;
 let rateCacheAt = 0;
-const FALLBACK = {
-  date: 'fallback', source: 'Curs demonstrativ — actualizarea BNR nu este disponibilă',
-  rates: { RON: 1, EUR: 5.05, USD: 4.66, GBP: 5.89, CHF: 5.28, HUF: 0.0127, BGN: 2.58, PLN: 1.18, CZK: 0.202 }
-};
-
 function parseBnr(xml) {
   const date = xml.match(/Cube date="([^"]+)"/)?.[1] || '';
   const rates = { RON: 1 };
@@ -41,13 +43,14 @@ function parseBnr(xml) {
 app.get('/api/rates', async (_req, res) => {
   try {
     if (rateCache && Date.now() - rateCacheAt < 4 * 60 * 60 * 1000) return res.json(rateCache);
-    const response = await fetch('https://www.bnr.ro/nbrfxrates.xml', { signal: AbortSignal.timeout(7000) });
+    const response = await fetch('https://curs.bnr.ro/nbrfxrates.xml', { signal: AbortSignal.timeout(7000) });
     if (!response.ok) throw new Error('BNR indisponibil');
-    rateCache = parseBnr(await response.text());
+    rateCache = { ...parseBnr(await response.text()), fetchedAt: new Date().toISOString() };
     rateCacheAt = Date.now();
     res.json(rateCache);
   } catch (_error) {
-    res.json(rateCache || FALLBACK);
+    if (rateCache) return res.json(rateCache);
+    res.status(503).json({ error: 'Cursul BNR nu este disponibil momentan.' });
   }
 });
 
