@@ -6,26 +6,27 @@ const PORT = process.env.PORT || 3000;
 const PUBLIC = path.join(__dirname, 'public');
 
 app.disable('x-powered-by');
-app.use(express.static(PUBLIC, { extensions: ['html'] }));
-
 const pages = {
   '/': 'index.html',
   '/unitati-de-masura': 'unitati-de-masura.html',
   '/randomizare': 'randomizare.html',
   '/zaruri': 'zaruri.html',
   '/convertor-valutar': 'convertor-valutar.html',
-  '/calculatoare': 'calculatoare.html',
+  '/calculator': 'calculatoare.html',
   '/data-si-timp': 'data-si-timp.html',
   '/liste': 'liste.html',
   '/text': 'text.html',
   '/culori': 'culori.html',
-  '/generatoare': 'generatoare.html',
+  '/generator': 'generatoare.html',
   '/dimensiuni': 'dimensiuni.html'
 };
 
 Object.entries(pages).forEach(([route, file]) => {
   app.get(route, (_req, res) => res.sendFile(path.join(PUBLIC, file)));
 });
+app.get('/calculatoare', (_req,res)=>res.redirect(301,'/calculator'));
+app.get('/generatoare', (_req,res)=>res.redirect(301,'/generator'));
+app.use(express.static(PUBLIC, { extensions: ['html'] }));
 
 let rateCache = null;
 let rateCacheAt = 0;
